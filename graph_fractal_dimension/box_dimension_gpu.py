@@ -155,6 +155,9 @@ def gpu_compute_box_dimension(
     if device is None:
         device = "cuda"
 
+    # normalise switch just in case someone passes 'OFF', 'Off', etc.
+    flag = str(count_diameter_less_nine).lower()
+
     # ---- 1. Preprocessing: undirected, connected ----
     if not isinstance(G, nx.Graph):
         G = G.to_networkx()
@@ -174,7 +177,8 @@ def gpu_compute_box_dimension(
         print("Error computing diameter:", e)
         return 0.0, 0.0
 
-    if diameter <= 9 and count_diameter_less_nine == "off":
+    # if user explicitly wants to skip small-diameter graphs
+    if diameter <= 9 and flag == "off":
         return None
 
     max_l = max(1, floor(diameter / 2))
@@ -192,7 +196,6 @@ def gpu_compute_box_dimension(
 
         uncovered = torch.ones(n, dtype=torch.bool, device=adj.device)
         box_count = 0
-
 
         # Cache balls for this specific (l, r)
         ball_cache = {}
@@ -309,4 +312,3 @@ def gpu_compute_box_dimension(
         plt.show()
 
     return float(R2), float(box_dimension)
-
