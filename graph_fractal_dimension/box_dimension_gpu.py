@@ -305,4 +305,9 @@ def gpu_compute_box_dimension(
         plt.xlabel("l")
         plt.ylabel("N_box(l)")
         plt.title(f"GPU R²={R2:.3f}, dim_B={box_dimension:.3f}")
-        plt.legen
+        plt.legend()
+        plt.tight_layout()
+        plt.show()
+
+    return float(R2), float(box_dimension)
+
