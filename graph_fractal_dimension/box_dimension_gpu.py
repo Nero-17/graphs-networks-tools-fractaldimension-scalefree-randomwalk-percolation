@@ -188,12 +188,11 @@ def gpu_compute_box_dimension(
 
     # ---- 4. Greedy box covering for each l ----
     for l in range(1, max_l + 1):
-        r = l // 2
-        if r <= 0:
-            r = 1
+        r = l // 2  # match CPU logic exactly; allow r = 0
 
         uncovered = torch.ones(n, dtype=torch.bool, device=adj.device)
         box_count = 0
+
 
         # Cache balls for this specific (l, r)
         ball_cache = {}
