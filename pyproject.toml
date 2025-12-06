@@ -3,24 +3,24 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fractal-dimension-of-graphs"
+name = "graphs-networks-tools"
 version = "0.1.0"
-description = "Compute the (box-counting) fractal dimension of graphs."
+description = "Graphs Networks Tools: fractal dimension, scale-free exponent, random walk, percolation."
 readme = "README.md"
 authors = [
-    { name = "Nero", email = "neroziyuli@gmail.com" }
+  { name = "Nero", email = "neroziyuli@gmail.com" },
 ]
 license = { text = "MIT" }
 requires-python = ">=3.9"
 dependencies = [
-    "networkx>=2.8",
-    "numpy>=1.24",
-    "matplotlib>=3.5",
-    "scikit-learn>=1.0",
+  "networkx>=2.8",
+  "numpy>=1.24",
+  "matplotlib>=3.5",
+  "scikit-learn>=1.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Nero-17/fractal-dimension-of-graphs"
+Homepage = "https://github.com/Nero-17/graphs-networks-tools-fractaldimension-scalefree-randomwalk-percolation"
 
 [tool.setuptools]
-packages = ["graph_fractal_dimension"]
+packages = ["graphs_networks_tools"]
