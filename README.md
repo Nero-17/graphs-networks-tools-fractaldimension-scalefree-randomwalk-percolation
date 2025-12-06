@@ -1,4 +1,4 @@
-# Fractal Dimension of Graphs
+# Graphs Networks Tools: Fractal Dimension/ Scale-Free/ Random Walk/ Percolation
 
 This repository provides tools to estimate the **box-counting (fractal) dimension** of graphs, using a greedy box-covering algorithm in the graph metric.
 
