@@ -2,10 +2,16 @@
 GPU-based prototype for computing the box-counting dimension of graphs.
 
 Main entry point:
-    gpu_compute_box_dimension(G, plot='off', count_diameter_less_nine='on', device=None)
+    gpu_compute_box_dimension(
+        G,
+        plot='off',
+        diameter_threshold=None,
+        device=None,
+    )
 
-This function mirrors the API of cpu_compute_box_dimension, but uses
-PyTorch on CUDA to accelerate the ball computations.
+This function mirrors the API of cpu_compute_box_dimension (up to the new
+diameter_threshold parameter), but uses PyTorch on CUDA to accelerate the
+ball computations.
 """
 
 from math import floor
@@ -123,7 +129,7 @@ def _gpu_ball_from_node(adj, start_idx, r):
 def gpu_compute_box_dimension(
     G,
     plot="off",
-    count_diameter_less_nine="on",
+    diameter_threshold=None,
     device=None,
 ):
     """
@@ -135,8 +141,11 @@ def gpu_compute_box_dimension(
         Input graph.
     plot : {'on', 'off'}, optional
         If 'on', show a log–log plot of N_box(l) vs l and the fitted line.
-    count_diameter_less_nine : {'on', 'off'}, optional
-        If 'off' and diameter(G) <= 9, skip computation and return None.
+    diameter_threshold : int or None, optional
+        If not None and diameter(G) <= diameter_threshold, the function
+        returns (0.0, 0.0) without performing the regression. If None,
+        no diameter cut-off is applied (apart from the usual requirement
+        of having at least two scales for regression).
     device : str or None, optional
         PyTorch device, e.g. 'cuda' or 'cuda:0'.
         If None, defaults to 'cuda'.
@@ -146,7 +155,8 @@ def gpu_compute_box_dimension(
     (R2, box_dimension) : tuple of floats
         R2 is the coefficient of determination of the log–log regression.
         box_dimension is the estimated box-counting dimension.
-        Returns (0.0, 0.0) if regression cannot be performed.
+        Returns (0.0, 0.0) if regression cannot be performed
+        (e.g. not enough l-values, or diameter <= diameter_threshold).
     """
     from sklearn.linear_model import LinearRegression
 
@@ -154,9 +164,6 @@ def gpu_compute_box_dimension(
 
     if device is None:
         device = "cuda"
-
-    # normalise switch just in case someone passes 'OFF', 'Off', etc.
-    flag = str(count_diameter_less_nine).lower()
 
     # ---- 1. Preprocessing: undirected, connected ----
     if not isinstance(G, nx.Graph):
@@ -177,8 +184,8 @@ def gpu_compute_box_dimension(
         print("Error computing diameter:", e)
         return 0.0, 0.0
 
-    # if user explicitly wants to skip small-diameter graphs
-    if diameter <= 9 and flag == "off":
+    # Optional diameter threshold: if set and diameter is too small, bail out.
+    if diameter_threshold is not None and diameter <= diameter_threshold:
         return 0.0, 0.0
 
     max_l = max(1, floor(diameter / 2))
