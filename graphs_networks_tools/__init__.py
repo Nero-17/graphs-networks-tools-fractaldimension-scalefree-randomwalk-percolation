@@ -10,7 +10,7 @@ except Exception:
 from .scale_free_exponent import compute_degree_dimension
 
 __all__ = [
-    "cpu_compute_box_dimension",
-    "gpu_compute_box_dimension",
-    "compute_degree_dimension",
+    "cpu_compute_fractal_dimension",
+    "gpu_compute_fractal_dimension",
+    "compute_scale_free_exponent",
 ]
