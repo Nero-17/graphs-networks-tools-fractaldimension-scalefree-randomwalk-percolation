@@ -61,7 +61,7 @@ def cpu_compute_box_dimension(
 
     if diameter <= 9 and count_diameter_less_nine == "off":
         # Explicitly skip small-diameter graphs
-        return None
+        return 0.0, 0.0
 
     max_l = max(1, floor(diameter / 2))
     l_values = []
