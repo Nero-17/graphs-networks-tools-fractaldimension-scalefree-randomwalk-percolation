@@ -1,16 +1,19 @@
-# graphs_networks_tools/__init__.py
+from graphs_networks_tools import (
+    cpu_compute_fractal_dimension,
+    gpu_compute_fractal_dimension,
+    compute_scale_free_exponent,
+)
 
-from .graphs_networks_tools import cpu_compute_fractal_dimension
+# ...
 
-try:
-    from .graphs_networks_tools import gpu_compute_fractal_dimension
-except Exception:
-    gpu_compute_box_dimension = None
+R2_cpu, dim_cpu = cpu_compute_box_dimension(
+    G,
+    plot="off",
+    diameter_threshold=9,
+)
 
-from .graphs_networks_tools import compute_scale_free_exponent
-
-__all__ = [
-    "cpu_compute_fractal_dimension",
-    "gpu_compute_fractal_dimension",
-    "compute_scale_free_exponent",
-]
+R2_gpu, dim_gpu = gpu_compute_box_dimension(
+    G,
+    plot="off",
+    diameter_threshold=9,
+)
