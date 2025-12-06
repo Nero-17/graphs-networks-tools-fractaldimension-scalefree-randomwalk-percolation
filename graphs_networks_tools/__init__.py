@@ -1,19 +1,12 @@
-from graphs_networks_tools import (
-    cpu_compute_fractal_dimension,
-    gpu_compute_fractal_dimension,
-    compute_scale_free_exponent,
-)
+from .box_dimension import cpu_compute_box_dimension
+try:
+    from .box_dimension_gpu import gpu_compute_box_dimension
+except Exception:
+    gpu_compute_box_dimension = None
+from .scale_free_exponent import compute_degree_dimension
 
-# ...
-
-R2_cpu, dim_cpu = cpu_compute_box_dimension(
-    G,
-    plot="off",
-    diameter_threshold=9,
-)
-
-R2_gpu, dim_gpu = gpu_compute_box_dimension(
-    G,
-    plot="off",
-    diameter_threshold=9,
-)
+__all__ = [
+    "cpu_compute_box_dimension",
+    "gpu_compute_box_dimension",
+    "compute_degree_dimension",
+]
