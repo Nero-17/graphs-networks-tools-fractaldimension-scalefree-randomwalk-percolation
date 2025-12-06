@@ -24,3 +24,4 @@ Homepage = "https://github.com/Nero-17/graphs-networks-tools-fractaldimension-sc
 
 [tool.setuptools]
 packages = ["graphs_networks_tools"]
+
