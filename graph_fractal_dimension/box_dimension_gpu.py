@@ -179,7 +179,7 @@ def gpu_compute_box_dimension(
 
     # if user explicitly wants to skip small-diameter graphs
     if diameter <= 9 and flag == "off":
-        return None
+        return 0.0, 0.0
 
     max_l = max(1, floor(diameter / 2))
 
