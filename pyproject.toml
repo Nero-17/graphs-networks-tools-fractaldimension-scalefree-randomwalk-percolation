@@ -21,3 +21,6 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/Nero-17/fractal-dimension-of-graphs"
+
+[tool.setuptools]
+packages = ["graph_fractal_dimension"]
