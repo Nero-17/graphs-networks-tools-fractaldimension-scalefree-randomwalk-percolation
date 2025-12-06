@@ -4,7 +4,7 @@
 Compute the (box-counting) fractal dimension of graphs.
 
 Main public function:
-    cpu_compute_box_dimension(G, plot='off', count_diameter_less_nine='on')
+    cpu_compute_box_dimension(G, plot='off', diameter_threshold=None)
 """
 
 from math import floor
@@ -18,7 +18,7 @@ from sklearn.linear_model import LinearRegression
 def cpu_compute_box_dimension(
     G,
     plot: str = "off",
-    count_diameter_less_nine: str = "on",
+    diameter_threshold=None,
 ):
     """
     Compute the box (fractal) dimension of a graph G.
@@ -29,8 +29,11 @@ def cpu_compute_box_dimension(
         The input graph.
     plot : {'on', 'off'}, optional
         If 'on', show a log–log plot of N_box(l) vs l and the fitted line.
-    count_diameter_less_nine : {'on', 'off'}, optional
-        If 'off' and the graph diameter is <= 9, skip computation and return None.
+    diameter_threshold : int or None, optional
+        If not None and the graph diameter is <= diameter_threshold,
+        the function returns (0.0, 0.0) without performing the regression.
+        If None, no diameter cut-off is applied (apart from the usual
+        requirement of having at least two scales for regression).
 
     Returns
     -------
@@ -38,7 +41,8 @@ def cpu_compute_box_dimension(
         Coefficient of determination of the log–log linear regression.
     box_dimension : float
         Estimated box-counting dimension. Returns (0.0, 0.0) if regression
-        cannot be performed (e.g., fewer than 2 data points).
+        cannot be performed (e.g., fewer than 2 data points, or
+        diameter <= diameter_threshold when a threshold is given).
     """
     # ---- 1. Preprocessing: undirected, connected ----
     if not isinstance(G, nx.Graph):
@@ -59,8 +63,8 @@ def cpu_compute_box_dimension(
         print("Error computing diameter:", e)
         return 0.0, 0.0
 
-    if diameter <= 9 and count_diameter_less_nine == "off":
-        # Explicitly skip small-diameter graphs
+    # Optional diameter threshold: if set and diameter is too small, bail out.
+    if diameter_threshold is not None and diameter <= diameter_threshold:
         return 0.0, 0.0
 
     max_l = max(1, floor(diameter / 2))
