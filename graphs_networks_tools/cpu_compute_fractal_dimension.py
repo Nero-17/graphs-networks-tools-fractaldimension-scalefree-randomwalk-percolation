@@ -4,7 +4,7 @@
 Compute the (box-counting) fractal dimension of graphs.
 
 Main public function:
-    cpu_compute_box_dimension(G, plot='off', diameter_threshold=None)
+    cpu_compute_fractal_dimension(G, plot='off', diameter_threshold=None)
 """
 
 from math import floor
