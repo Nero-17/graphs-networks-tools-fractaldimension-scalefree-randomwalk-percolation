@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 
-def cpu_compute_box_dimension(
+def cpu_compute_fractal_dimension(
     G,
     plot: str = "off",
     diameter_threshold=None,
