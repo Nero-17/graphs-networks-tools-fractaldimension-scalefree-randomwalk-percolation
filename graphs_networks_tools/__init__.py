@@ -17,6 +17,6 @@ from .draw_bond_percolation import draw_bond_percolation
 __all__ = [
     "cpu_compute_fractal_dimension",
     "gpu_compute_fractal_dimension",
-    "compute_scale_free_exponent",
+    "compute_degree_dimension",
     "draw_bond_percolation",
 ]
