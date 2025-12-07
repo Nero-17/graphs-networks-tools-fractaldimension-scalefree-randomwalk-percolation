@@ -126,7 +126,7 @@ def _gpu_ball_from_node(adj, start_idx, r):
     return visited
 
 
-def gpu_compute_box_dimension(
+def gpu_compute_fractal_dimension(
     G,
     plot="off",
     diameter_threshold=None,
