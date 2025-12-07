@@ -8,7 +8,7 @@ Main features (public API):
     * gpu_compute_fractal_dimension           (None if GPU backend not available)
 
 - Scale-free exponent / degree dimension
-    * compute_scale_free_exponent            (preferred name)
+    * compute_degree_dimension            (preferred name)
     * compute_degree_dimension               (backwards-compatible alias)
 
 - Percolation and IGS visualisation (optional, if the module is present)
@@ -45,14 +45,14 @@ gpu_compute_box_dimension = gpu_compute_fractal_dimension
 # Older naming convention: compute_degree_dimension
 try:
     # Preferred: a module that already defines both names
-    from .compute_scale_free_exponent import (
-        compute_scale_free_exponent,
+    from . compute_degree_dimension  import (
+         compute_degree_dimension,
         compute_degree_dimension,
     )
 except ImportError:
     # Fallback: older module name or API, where only compute_degree_dimension exists
     try:
-        from .scale_free_exponent import compute_degree_dimension
+        from . compute_degree_dimension  import compute_degree_dimension
     except ImportError:
         # If neither module is present, expose placeholders
         def compute_degree_dimension(*args, **kwargs):
@@ -62,7 +62,7 @@ except ImportError:
             )
 
     # In this fallback case, we treat degree dimension as the scale-free exponent
-    compute_scale_free_exponent = compute_degree_dimension
+    compute_degree_dimension = compute_degree_dimension
 
 
 # --------------------------------------
@@ -94,7 +94,6 @@ __all__ = [
     "gpu_compute_box_dimension",
 
     # Scale-free / degree dimension
-    "compute_scale_free_exponent",
     "compute_degree_dimension",
 
     # Percolation / IGS (optional)
